@@ -1,0 +1,163 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Documentation for Shortener-URL Api",
+        "title": "Shortener URL Service",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/shortener": {
+            "post": {
+                "description": "Create a new short url",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Create a new short url"
+                ],
+                "summary": "Create a new short url",
+                "parameters": [
+                    {
+                        "description": "Body",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ErrRespBadRequest"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ErrRespInternalServerError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/shortener/{id}": {
+            "get": {
+                "description": "Get a short url",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Get a short url"
+                ],
+                "summary": "Get a short url",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ErrRespBadRequest"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ErrRespInternalServerError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.CreateRequest": {
+            "type": "object",
+            "required": [
+                "url"
+            ],
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateResponse": {
+            "type": "object",
+            "properties": {
+                "short_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.GetResponse": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "swagger.ErrRespBadRequest": {
+            "type": "object",
+            "required": [
+                "title",
+                "type"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "example": "required fields are missing"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "srn:error:bad_request"
+                }
+            }
+        },
+        "swagger.ErrRespInternalServerError": {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "example": "internal server error"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "srn:error:internal_server_error"
+                }
+            }
+        }
+    }
+}

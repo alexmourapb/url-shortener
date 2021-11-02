@@ -1,0 +1,107 @@
+definitions:
+  models.CreateRequest:
+    properties:
+      url:
+        type: string
+    required:
+    - url
+    type: object
+  models.CreateResponse:
+    properties:
+      short_url:
+        type: string
+    type: object
+  models.GetResponse:
+    properties:
+      url:
+        type: string
+    type: object
+  swagger.ErrRespBadRequest:
+    properties:
+      title:
+        example: required fields are missing
+        type: string
+      type:
+        example: srn:error:bad_request
+        type: string
+    required:
+    - title
+    - type
+    type: object
+  swagger.ErrRespInternalServerError:
+    properties:
+      title:
+        example: internal server error
+        type: string
+      type:
+        example: srn:error:internal_server_error
+        type: string
+    required:
+    - type
+    type: object
+info:
+  contact: {}
+  description: Documentation for Shortener-URL Api
+  title: Shortener URL Service
+  version: "1.0"
+paths:
+  /api/v1/shortener:
+    post:
+      consumes:
+      - application/json
+      description: Create a new short url
+      parameters:
+      - description: Body
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.CreateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ErrRespBadRequest'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/swagger.ErrRespInternalServerError'
+      summary: Create a new short url
+      tags:
+      - Create a new short url
+  /api/v1/shortener/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a short url
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.GetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ErrRespBadRequest'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/swagger.ErrRespInternalServerError'
+      summary: Get a short url
+      tags:
+      - Get a short url
+swagger: "2.0"
