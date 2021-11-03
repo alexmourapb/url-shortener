@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"math/rand"
+	"time"
 
 	"github.com/alexmourapb/url-shortener/app/common/domain"
 )
@@ -13,7 +14,7 @@ const (
 
 func (s Shortener) Create(ctx context.Context, url string) (string, error) {
 	const operation = "UseCase.Create"
-	id := shortGenerate()
+	id := shortKeyGenerate()
 	err := s.db.Save(ctx, id, url)
 	if err != nil {
 		return "", domain.Error(operation, err)
@@ -22,12 +23,15 @@ func (s Shortener) Create(ctx context.Context, url string) (string, error) {
 	return id, nil
 }
 
-func shortGenerate() string {
-	var chars = []rune(alphabet)
-	output := make([]rune, 8)
-	for i := range output {
-		output[i] = chars[rand.Intn(len(chars))]
-	}
+// Generate a 63-bit random string
+func shortKeyGenerate() string {
+	b := make([]byte, 7)
 
-	return string(output)
+	currentTime := time.Now().UnixNano()
+	rand.Seed(currentTime)
+
+	for i := range b {
+		b[i] = alphabet[rand.Intn(len(alphabet))]
+	}
+	return string(b)
 }

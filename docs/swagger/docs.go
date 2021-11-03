@@ -33,7 +33,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Create a new short url"
+                    "Create"
                 ],
                 "summary": "Create a new short url",
                 "parameters": [
@@ -71,7 +71,7 @@ var doc = `{
         },
         "/api/v1/shortener/{id}": {
             "get": {
-                "description": "Get a short url",
+                "description": "Redirect by a short url",
                 "consumes": [
                     "application/json"
                 ],
@@ -79,9 +79,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Get a short url"
+                    "Get and Redirect"
                 ],
-                "summary": "Get a short url",
+                "summary": "Redirect by a short url",
                 "parameters": [
                     {
                         "type": "string",
@@ -92,16 +92,67 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "308": {
+                        "description": ""
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/models.GetResponse"
+                            "$ref": "#/definitions/swagger.ErrRespNotFound"
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ErrRespInternalServerError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a short url",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Update"
+                ],
+                "summary": "Update a short url",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Body",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/swagger.ErrRespBadRequest"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ErrRespNotFound"
                         }
                     },
                     "500": {
@@ -134,9 +185,12 @@ var doc = `{
                 }
             }
         },
-        "models.GetResponse": {
+        "models.UpdateRequest": {
             "type": "object",
             "properties": {
+                "active": {
+                    "type": "boolean"
+                },
                 "url": {
                     "type": "string"
                 }
@@ -172,6 +226,22 @@ var doc = `{
                 "type": {
                     "type": "string",
                     "example": "srn:error:internal_server_error"
+                }
+            }
+        },
+        "swagger.ErrRespNotFound": {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "example": "not found"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "srn:error:not_found"
                 }
             }
         }

@@ -1,0 +1,31 @@
+run:
+  deadline: 30m
+  tests: true
+
+linters-settings:
+  govet:
+    check-shadowing: false
+  gofmt:
+    simplify: true
+  maligned:
+    suggest-new: true
+  misspell:
+    locale: US
+
+linters:
+  enable:
+    - goimports
+    - gofmt
+    - bodyclose
+    - goconst
+    - prealloc
+    - rowserrcheck
+    - unconvert
+    - errcheck
+  disable:
+    - maligned
+
+output:
+  format: 'colored-line-number'
+  print-issued-lines: true
+  print-linter-name: true

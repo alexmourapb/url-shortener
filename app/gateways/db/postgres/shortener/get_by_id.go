@@ -12,13 +12,12 @@ import (
 func (r *Repository) GetByID(ctx context.Context, id string) (*entities.ShortURL, error) {
 	var shortURL entities.ShortURL
 
-	query := "SELECT * FROM short_urls WHERE id = $1"
+	query := "SELECT id, url, active FROM short_urls WHERE id = $1"
 
 	err := r.Pool.QueryRow(ctx, query, id).Scan(
 		&shortURL.ID,
 		&shortURL.URL,
 		&shortURL.Active,
-		&shortURL.CreatedAt,
 	)
 	if err != nil {
 		if err == pgxType.ErrNoRows {

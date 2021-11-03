@@ -40,7 +40,7 @@ func NewShortenerApi(useCase *usecase.Shortener) *ShortenerApi {
 	}
 }
 
-func (c *ShortenerApi) Start(logger *zerolog.Logger, host string, port string) {
+func (c *ShortenerApi) Start(logger *zerolog.Logger, host, port, srvDest string) {
 	// Router
 	r := mux.NewRouter()
 
@@ -51,7 +51,7 @@ func (c *ShortenerApi) Start(logger *zerolog.Logger, host string, port string) {
 	publicV1 := r.PathPrefix("/api/v1").Subrouter()
 
 	// Shortener Routes
-	shortener.NewHandler(publicV1, logger, c.UseCase)
+	shortener.NewHandler(publicV1, logger, c.UseCase, srvDest)
 
 	// Negroni to manage middlewares
 	recovery := negroni.NewRecovery()

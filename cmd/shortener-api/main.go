@@ -66,5 +66,5 @@ func main() {
 
 	// Start api service
 	api := http.NewShortenerApi(shortenerUseCase)
-	api.Start(&log, cfg.Service.Host, cfg.Service.Port)
+	api.Start(&log, cfg.Service.Host, cfg.Service.Port, cfg.Service.DestinationURLService)
 }

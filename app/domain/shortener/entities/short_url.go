@@ -7,4 +7,5 @@ type ShortURL struct {
 	URL       string
 	Active    bool
 	CreatedAt time.Time
+	UpdatedAt time.Time
 }
