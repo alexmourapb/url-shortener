@@ -11,16 +11,18 @@ import (
 )
 
 type Handler struct {
-	UseCase   shortener.UseCase
-	Validator *validator.JSONValidator
-	logger    *zerolog.Logger
+	UseCase            shortener.UseCase
+	Validator          *validator.JSONValidator
+	logger             *zerolog.Logger
+	DestinationService string
 }
 
-func NewHandler(public *mux.Router, logger *zerolog.Logger, useCase shortener.UseCase) *Handler {
+func NewHandler(public *mux.Router, logger *zerolog.Logger, useCase shortener.UseCase, destSrv string) *Handler {
 	h := &Handler{
-		UseCase:   useCase,
-		Validator: validator.NewJSONValidator(),
-		logger:    logger,
+		UseCase:            useCase,
+		Validator:          validator.NewJSONValidator(),
+		logger:             logger,
+		DestinationService: destSrv,
 	}
 
 	// Public routes
@@ -29,8 +31,11 @@ func NewHandler(public *mux.Router, logger *zerolog.Logger, useCase shortener.Us
 	// Create Short URL
 	publicShortener.HandleFunc("/", h.HandlerCreate).Methods(http.MethodPost)
 
-	// Get URL
+	// Get And Redirect
 	publicShortener.HandleFunc("/{id}", h.HandlerGet).Methods(http.MethodGet)
+
+	// Put update short URL
+	publicShortener.HandleFunc("/{id}", h.HandlerUpdate).Methods(http.MethodPut)
 
 	return h
 }

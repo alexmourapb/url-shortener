@@ -15,7 +15,7 @@ import (
 // HandlerGet ...
 // @Summary Redirect by a short url
 // @Description Redirect by a short url
-// @Tags Redirect by a short url
+// @Tags Get and Redirect
 // @Accept json
 // @Produce json
 // @Param id path string true "id"
@@ -26,6 +26,11 @@ import (
 func (h Handler) HandlerGet(w http.ResponseWriter, r *http.Request) {
 	operation := "Handler.Get"
 	log, err := instrumentation.LogFromContext(r.Context(), *h.logger, operation)
+	if err != nil {
+		log.Err(err)
+		_ = responses.Send(w, responses.ErrInternalServerError, http.StatusInternalServerError)
+		return
+	}
 	log.Info().Msg("starting get short url")
 
 	vars := mux.Vars(r)

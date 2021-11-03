@@ -18,11 +18,12 @@ type Config struct {
 }
 
 type ServiceConfig struct {
-	AppName     string                  `envconfig:"APP_NAME" default:"shortener-api"`
-	Host        string                  `envconfig:"APP_HOST" default:"0.0.0.0"`
-	Port        string                  `envconfig:"API_PORT" default:"8000"`
-	Environment environment.Environment `envconfig:"ENVIRONMENT" default:"developer"`
-	SwaggerHost string                  `envconfig:"SWAGGER_HOST" default:"http://localhost:8000"`
+	AppName               string                  `envconfig:"APP_NAME" default:"shortener-api"`
+	Host                  string                  `envconfig:"APP_HOST" default:"0.0.0.0"`
+	Port                  string                  `envconfig:"API_PORT" default:"8000"`
+	Environment           environment.Environment `envconfig:"ENVIRONMENT" default:"developer"`
+	SwaggerHost           string                  `envconfig:"SWAGGER_HOST" default:"http://localhost:8000"`
+	DestinationURLService string                  `envconfig:"DESTINATION_HOST" default:"myapp.com/"`
 }
 
 func LoadConfig() (*Config, error) {

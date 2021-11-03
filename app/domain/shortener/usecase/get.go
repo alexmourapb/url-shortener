@@ -20,22 +20,22 @@ func (s Shortener) Get(ctx context.Context, log *zerolog.Logger, id string) (str
 	if cacheOutput != nil {
 		output = cacheOutput.URL
 	} else {
-		dbOtput, err := s.db.GetByID(ctx, id)
+		dbOutput, err := s.db.GetByID(ctx, id)
 		if err != nil {
 			return "", domain.Error(operation, err)
 		}
 
-		if !dbOtput.Active {
+		if !dbOutput.Active {
 			return "", shared.ErrURLNotFound
 		}
 
 		go func() {
-			if err := s.cache.Save(id, dbOtput); err != nil {
+			if err := s.cache.Save(id, dbOutput); err != nil {
 				log.Err(err).Msg("failed to save data in to cache")
 			}
 		}()
 
-		output = dbOtput.URL
+		output = dbOutput.URL
 	}
 
 	return output, nil

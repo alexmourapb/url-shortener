@@ -11,8 +11,10 @@ definitions:
       short_url:
         type: string
     type: object
-  models.GetResponse:
+  models.UpdateRequest:
     properties:
+      active:
+        type: boolean
       url:
         type: string
     type: object
@@ -35,6 +37,17 @@ definitions:
         type: string
       type:
         example: srn:error:internal_server_error
+        type: string
+    required:
+    - type
+    type: object
+  swagger.ErrRespNotFound:
+    properties:
+      title:
+        example: not found
+        type: string
+      type:
+        example: srn:error:not_found
         type: string
     required:
     - type
@@ -74,12 +87,12 @@ paths:
             $ref: '#/definitions/swagger.ErrRespInternalServerError'
       summary: Create a new short url
       tags:
-      - Create a new short url
+      - Create
   /api/v1/shortener/{id}:
     get:
       consumes:
       - application/json
-      description: Get a short url
+      description: Redirect by a short url
       parameters:
       - description: id
         in: path
@@ -89,19 +102,53 @@ paths:
       produces:
       - application/json
       responses:
-        "201":
-          description: Created
+        "308":
+          description: ""
+        "404":
+          description: Not Found
           schema:
-            $ref: '#/definitions/models.GetResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/swagger.ErrRespBadRequest'
+            $ref: '#/definitions/swagger.ErrRespNotFound'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/swagger.ErrRespInternalServerError'
-      summary: Get a short url
+      summary: Redirect by a short url
       tags:
-      - Get a short url
+      - Get and Redirect
+    put:
+      consumes:
+      - application/json
+      description: Update a short url
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Body
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ErrRespBadRequest'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/swagger.ErrRespNotFound'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/swagger.ErrRespInternalServerError'
+      summary: Update a short url
+      tags:
+      - Update
 swagger: "2.0"

@@ -1,0 +1,193 @@
+{
+	"info": {
+		"_postman_id": "baa2acfa-b9d5-47c0-9e3b-42ab8cbeb71f",
+		"name": "shortener-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{base_url}}/api/v1/shortener/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"http://www.mercadolivre.com.br\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/shortener/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"shortener",
+						""
+					]
+				},
+				"description": "Create a new shortened url"
+			},
+			"response": [
+				{
+					"name": "{{base_url}}/api/v1/shortener/",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\": \"http://www.mercadolivre.com.br\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/shortener/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"shortener",
+								""
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "c6beeb1e-6e56-4b12-a480-e09e92b13cbe"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 03 Nov 2021 17:47:32 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"short_url\": \"myapp.com/MuSyxBy\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get and Redirect",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/shortener/MuSyxBy",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"shortener",
+						"MuSyxBy"
+					]
+				},
+				"description": "Get a shortened url and redirect to host"
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/api/v1/shortener/NfHK5a84",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"http://www.mercadopago.com.br\",\n    \"active\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/shortener/NfHK5a84",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"shortener",
+						"NfHK5a84"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "{{base_url}}/api/v1/shortener/NfHK5a84",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\": \"http://www.mercadopago.com.br\",\n    \"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/shortener/NfHK5a84",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"shortener",
+								"NfHK5a84"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "6a3b41d0-807a-406c-9183-b9a9f648a14e"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 03 Nov 2021 17:19:17 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "5"
+						}
+					],
+					"cookie": [],
+					"body": "null"
+				}
+			]
+		}
+	]
+}
