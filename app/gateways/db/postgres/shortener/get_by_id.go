@@ -17,6 +17,7 @@ func (r *Repository) GetByID(ctx context.Context, id string) (*entities.ShortURL
 	err := r.Pool.QueryRow(ctx, query, id).Scan(
 		&shortURL.ID,
 		&shortURL.URL,
+		&shortURL.Active,
 		&shortURL.CreatedAt,
 	)
 	if err != nil {
